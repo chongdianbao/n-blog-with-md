@@ -1,0 +1,39 @@
+<%- include('header') %>
+
+<div class="ui grid">
+  <div class="one wide column">
+    <a class="avatar"
+       href="/posts?author=<%= user._id %>"
+       data-title="<%= user.name %> | <%= ({m: '男', f: '女', x: '保密'})[user.gender] %>"
+       data-content="<%= user.bio %>">
+      <img class="avatar" src="/img/<%= user.avatar %>">
+    </a>
+  </div>
+
+  <div class="seven wide column">
+    <form class="ui form segment" method="post" action="/posts">
+      <div class="field required">
+        <label>标题</label>
+        <input type="text" name="title">
+      </div>
+      <div class="field required">
+        <label>内容</label>
+        <textarea name="content" rows="15" onchange="fn()" onkeyup="fn()" onpaste="fn()" onpageshow="fn()" onclick="fn()" oninput="fn()"></textarea>
+      </div>
+      <input type="submit" class="ui button" value="发布">
+    </form>
+  </div>
+  <div class="seven wide column">
+    <div id="mdccontent"></div>
+</div>
+  <script src="https://cdn.bootcss.com/marked/0.3.6/marked.js"></script>
+  <script>
+      function fn () {
+          document.getElementById('mdccontent').innerHTML =
+              marked(document.getElementsByName("content")[0].value);
+
+      }
+      fn();
+
+  </script>
+<%- include('footer') %>
